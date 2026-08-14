@@ -9,7 +9,7 @@ A launch-ready memecoin website and Telegram lore bot for an independent Korat p
 - Telegram bot with `/start`, `/lore`, `/chain`, `/contract`, and `/reset`
 - Shared factual Korat breed lore and confirmed Robinhood Chain basics
 - Cohere-first LLM routing with automatic Groq fallback
-- Hard topic guard for cats, $KORAT, and relevant Robinhood Chain questions
+- Multilingual LLM topic enforcement for cats, $KORAT, and relevant Robinhood Chain questions
 - Wallet helper for Robinhood Chain mainnet, chain ID `4663`
 - Contract and community links controlled through environment variables
 - Light and dark themes, reduced-motion support, and mobile layouts

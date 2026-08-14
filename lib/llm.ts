@@ -5,7 +5,7 @@ export type ChatMessage = {
   content: string;
 };
 
-type ProviderName = "KORAT Guard" | "Cohere" | "Groq";
+type ProviderName = "Cohere" | "Groq";
 
 type Provider = {
   name: ProviderName;
@@ -18,9 +18,6 @@ export type LlmReply = {
   provider: ProviderName;
 };
 
-const CAT_TOPIC = /\b(cat|cats|kitten|kittens|kitty|kitties|feline|felines|korat|si-sawat|breed|breeds|purr|meow|whisker|whiskers|paw|paws|tail|tails|fur|coat|claw|claws|litter|pet|pets|vet|veterinarian|feeding|grooming|eyes?|ears?)\b/i;
-const PROJECT_TOPIC = /(?:\$korat|\bkorat\b|robinhood chain|\brobinhood\b|chain id|onchain|token|memecoin|coin|contract|ticker|wallet|gas|network|launch|project|community|telegram)/i;
-
 export class NoProviderError extends Error {
   constructor(message: string) {
     super(message);
@@ -28,20 +25,7 @@ export class NoProviderError extends Error {
   }
 }
 
-export function isAllowedKoratTopic(messages: ChatMessage[]) {
-  const lastUserMessage = [...messages].reverse().find((message) => message.role === "user")?.content ?? "";
-  return CAT_TOPIC.test(lastUserMessage) || PROJECT_TOPIC.test(lastUserMessage);
-}
-
 export async function generateKoratReply(messages: ChatMessage[]): Promise<LlmReply> {
-  if (!isAllowedKoratTopic(messages)) {
-    return {
-      provider: "KORAT Guard",
-      answer:
-        "Hiss. My whiskers only handle cats, cat care, $KORAT lore, and our home on Robinhood Chain. Ask me something feline, human.",
-    };
-  }
-
   const providers = getProviders().filter((provider) => provider.configured);
   if (providers.length === 0) {
     throw new NoProviderError(
