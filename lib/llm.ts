@@ -73,7 +73,7 @@ async function generateWithCohere(messages: ChatMessage[]) {
         { role: "system", content: buildKoratInstructions() },
         ...messages.map((message) => ({ role: message.role, content: message.content })),
       ],
-      max_tokens: 700,
+      max_tokens: 1000,
       temperature: 0.85,
     },
     {
@@ -96,10 +96,10 @@ async function generateWithGroq(messages: ChatMessage[]) {
     {
       model: process.env.GROQ_MODEL?.trim() || "llama-3.1-8b-instant",
       messages: [
-        { role: "system", content: buildKoratInstructions() },
+        { role: "system", content: buildKoratInstructions({ compact: true }) },
         ...messages.map((message) => ({ role: message.role, content: message.content })),
       ],
-      max_completion_tokens: 700,
+      max_completion_tokens: 600,
       temperature: 0.85,
     },
     { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
