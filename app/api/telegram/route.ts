@@ -37,5 +37,8 @@ export async function GET() {
     ok: true,
     configured: Boolean(token),
     secured: Boolean(secret),
+    // So you can tell which build is actually live instead of guessing.
+    commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "local",
+    groupMentionGate: true,
   });
 }
