@@ -1,11 +1,12 @@
 import { buildKoratInstructions } from "./korat-lore";
+import { getKoratContractReply, isKoratContractQuestion } from "./korat-config";
 
 export type ChatMessage = {
   role: "user" | "assistant";
   content: string;
 };
 
-type ProviderName = "Cohere" | "Groq";
+type ProviderName = "Cohere" | "Groq" | "Verified";
 
 type Provider = {
   name: ProviderName;
@@ -26,6 +27,11 @@ export class NoProviderError extends Error {
 }
 
 export async function generateKoratReply(messages: ChatMessage[]): Promise<LlmReply> {
+  const latestUserMessage = [...messages].reverse().find((message) => message.role === "user")?.content;
+  if (latestUserMessage && isKoratContractQuestion(latestUserMessage)) {
+    return { answer: getKoratContractReply(), provider: "Verified" };
+  }
+
   const providers = getProviders().filter((provider) => provider.configured);
   if (providers.length === 0) {
     throw new NoProviderError(

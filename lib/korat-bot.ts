@@ -1,6 +1,6 @@
 import { Bot } from "grammy";
 import { generateKoratReply } from "./llm";
-import { getKoratContractAddress } from "./korat-config";
+import { getKoratContractReply } from "./korat-config";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -89,12 +89,7 @@ export function createKoratBot(token: string) {
   });
 
   bot.command(["contract", "ca"], async (ctx) => {
-    const contract = getKoratContractAddress();
-    await ctx.reply(
-      contract
-        ? `Confirmed $KORAT CA:\n${contract}\n\nCheck it character by character. Fake CAs are built to match the first and last few, so a quick glance is how wallets die.`
-        : "No CA announced here yet. Anyone sliding one into your DMs is not me, is not good luck, and is after your lunch money.\n\nWhen it is real it comes from official links only. Verify before you ape.",
-    );
+    await ctx.reply(getKoratContractReply());
   });
 
   bot.command("reset", async (ctx) => {
