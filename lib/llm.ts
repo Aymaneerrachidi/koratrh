@@ -74,7 +74,7 @@ async function generateWithCohere(messages: ChatMessage[]) {
         ...messages.map((message) => ({ role: message.role, content: message.content })),
       ],
       max_tokens: 500,
-      temperature: 0.3,
+      temperature: 0.85,
     },
     {
       Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
@@ -95,7 +95,7 @@ async function generateWithGroq(messages: ChatMessage[]) {
         ...messages.map((message) => ({ role: message.role, content: message.content })),
       ],
       max_completion_tokens: 500,
-      temperature: 0.3,
+      temperature: 0.85,
     },
     { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
   );

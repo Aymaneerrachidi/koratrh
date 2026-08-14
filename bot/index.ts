@@ -13,19 +13,19 @@ async function main() {
   bot.command("start", async (ctx) => {
     histories.delete(ctx.chat.id);
     await ctx.reply(
-      "Mrrp. I am KORAT, your silver-blue lore keeper. Ask my whiskers about cats, Si-Sawat, Thai good-luck tradition, $KORAT, or Robinhood Chain. Unrelated questions get a polite hiss.\n\nI do not predict prices or give financial advice.",
+      "Mrrp. KORAT here. Silver coat, green eyes, good luck cat, absolutely no work ethic.\n\nAsk me about cats, Si-Sawat, the good luck tradition, $KORAT, or Robinhood Chain. Ask me anything else and you get a hiss.\n\nNo price calls, no financial advice. I am a cat.",
     );
   });
 
   bot.command("lore", async (ctx) => {
     await ctx.reply(
-      "The Korat is Thailand's silver-blue good luck cat, traditionally called Si-Sawat. Its story appears in the historic Cat-Book Poems, and Korats were treasured as gifts for prosperity and happy beginnings.",
+      "Short version: I am the good luck cat, Si-Sawat to my friends. Silver-tipped blue coat, green eyes, heart-shaped face, all documented in the historic Cat-Book Poems. Korats were never sold, only gifted, because handing someone a Korat meant handing them good fortune. Yes, I am a present. No, you cannot return me.",
     );
   });
 
   bot.command("chain", async (ctx) => {
     await ctx.reply(
-      "Robinhood Chain is an EVM-compatible Layer 2. Mainnet chain ID: 4663. Gas token: ETH. Always verify network details and the $KORAT contract through official project links.",
+      "Robinhood Chain, EVM compatible Layer 2. Chain ID 4663, gas paid in ETH. That is the litter box my paws live in.\n\nVerify every network detail and the $KORAT contract through official project links. Trust nothing a stranger sends you in a DM.",
     );
   });
 
@@ -34,20 +34,20 @@ async function main() {
     await ctx.reply(
       contract
         ? `Confirmed $KORAT contract:\n${contract}`
-        : "The $KORAT contract has not been announced here yet. Never trust an address from an unverified reply or DM.",
+        : "No contract announced here yet. Anyone sliding one into your DMs is not me, is not good luck, and is after your lunch money.",
     );
   });
 
   bot.command("reset", async (ctx) => {
     histories.delete(ctx.chat.id);
-    await ctx.reply("Memory cleared. Fresh paws, fresh question.");
+    await ctx.reply("Memory wiped. Whatever you said, I have already forgotten it. Classic cat behaviour. Fresh paws, ask again.");
   });
 
   bot.on("message:text", async (ctx) => {
     const chatId = ctx.chat.id;
     const now = Date.now();
     if (now - (lastRequest.get(chatId) || 0) < 1500) {
-      await ctx.reply("One paw at a time. Please wait a moment before asking again.");
+      await ctx.reply("One paw at a time. I am a cat, not a server farm. Give it a second.");
       return;
     }
     lastRequest.set(chatId, now);
@@ -75,18 +75,18 @@ async function main() {
       await ctx.reply(response.answer, { link_preview_options: { is_disabled: true } });
     } catch (error) {
       console.error("Telegram response error", error);
-      await ctx.reply("The lore keeper is taking a short catnap. Please try again soon.");
+      await ctx.reply("Catnap in progress, brain temporarily offline. Poke me again in a moment.");
     }
   });
 
   bot.catch((error) => console.error("Telegram bot error", error.error));
 
   await bot.api.setMyCommands([
-    { command: "start", description: "Meet KORAT" },
-    { command: "lore", description: "Read the short origin story" },
-    { command: "chain", description: "Get Robinhood Chain basics" },
+    { command: "start", description: "Meet the good luck cat" },
+    { command: "lore", description: "The origin story, short version" },
+    { command: "chain", description: "Robinhood Chain basics" },
     { command: "contract", description: "Show the confirmed contract" },
-    { command: "reset", description: "Clear conversation memory" },
+    { command: "reset", description: "Wipe my memory" },
   ]);
 
   process.once("SIGINT", () => bot.stop());

@@ -8,10 +8,10 @@ type Message = { role: "user" | "assistant"; content: string };
 
 const greeting: Message = {
   role: "assistant",
-  content: "Mrrp. I am KORAT, keeper of silver-blue lore. Ask my whiskers about cats, $KORAT, or Robinhood Chain.",
+  content: "Mrrp. KORAT here. Good luck cat, professional napper, keeper of silver-blue lore. Ask my whiskers about cats, $KORAT, or Robinhood Chain.",
 };
 
-const prompts = ["Why is the Korat lucky?", "What makes the breed unique?", "Which chain is $KORAT on?"];
+const prompts = ["Why is the Korat a good luck cat?", "What makes the breed unique?", "Which chain is $KORAT on?"];
 
 export function KoratChat() {
   const [messages, setMessages] = useState<Message[]>([greeting]);

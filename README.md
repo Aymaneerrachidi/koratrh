@@ -71,7 +71,7 @@ Never publish the contract UI until the deployed address has been verified on th
 
 ## Sources used for the knowledge layer
 
-- [Cat Fanciers' Association Korat profile](https://cfa.org/breed/korat/)
+- [Cat Fanciers' Association Korat profile](https://cfa.org/breed/korat/) (primary source, credited in the site footer)
 - [The International Cat Association Korat profile](https://tica.org/breed/korat/)
 - [Korat and Thai Cat Association breed profile](https://www.korats.org.uk/breed-profile/)
 - [Robinhood Chain documentation](https://docs.robinhood.com/chain/)

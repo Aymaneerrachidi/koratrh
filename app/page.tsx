@@ -58,8 +58,8 @@ export default function Home() {
         </header>
 
         <div className="hero-content" data-hero-copy>
-          <p className="hero-eyebrow">The good luck cat of Thailand</p>
-          <h1>The lucky cat comes onchain.</h1>
+          <p className="hero-eyebrow">The original good luck cat</p>
+          <h1>The good luck cat comes onchain.</h1>
           <p className="hero-subtitle">Centuries of lore. Silver-blue conviction. Built for Robinhood Chain.</p>
           <div className="hero-actions">
             <a className="button button-dark" href="#ask">Ask KORAT <ArrowDown size={19} weight="bold" /></a>
@@ -69,7 +69,7 @@ export default function Home() {
       </section>
 
       <section className="fact-ribbon" aria-label="KORAT at a glance" data-reveal>
-        <div><span>Origin</span><strong>Thailand</strong></div>
+        <div><span>Coat</span><strong>Silver-blue</strong></div>
         <div><span>Known as</span><strong>Si-Sawat</strong></div>
         <div><span>Symbol</span><strong>Good fortune</strong></div>
         <div><span>Network</span><strong>Robinhood Chain</strong></div>
@@ -82,7 +82,7 @@ export default function Home() {
             Good luck, <span className="inline-cat" aria-hidden="true"><Image src="/images/korat-avatar.png" alt="" fill sizes="96px" /></span> long before the blockchain.
           </h2>
           <p data-scrub-text>
-            {"The Korat appears in Thailand's historic Cat-Book Poems. Its silver-tipped blue coat, green eyes, and heart-shaped face made it a living symbol of prosperity."
+            {"The Korat appears in the historic Cat-Book Poems. Its silver-tipped blue coat, green eyes, and heart-shaped face made it a living symbol of prosperity."
               .split(" ")
               .map((word, index) => <span data-scrub-word key={`${word}-${index}`}>{word} </span>)}
           </p>
@@ -110,7 +110,7 @@ export default function Home() {
             </article>
             <article className="lore-accordion-item">
               <strong>Gifted, not sold</strong>
-              <p>Thai tradition treated Korats as treasured gifts for luck, happiness, and prosperous beginnings.</p>
+              <p>Tradition treated Korats as treasured gifts for good luck, happiness, and prosperous beginnings.</p>
             </article>
           </div>
         </div>
@@ -170,7 +170,15 @@ export default function Home() {
           </span>
           $KORAT
         </a>
-        <p>Independent community project. Not affiliated with or endorsed by Robinhood. Memecoins are highly speculative.</p>
+        <div className="footer-note">
+          <p>Independent community project. Not affiliated with or endorsed by Robinhood. Memecoins are highly speculative.</p>
+          <p className="footer-source">
+            Primary breed source:{" "}
+            <a href="https://cfa.org/breed/korat/" target="_blank" rel="noreferrer">
+              Cat Fanciers&apos; Association &mdash; Korat <ArrowUpRight size={13} weight="bold" />
+            </a>
+          </p>
+        </div>
         <div className="social-links">
           {telegramUrl && <a href={telegramUrl} target="_blank" rel="noreferrer" aria-label="KORAT on Telegram"><TelegramLogo size={22} weight="fill" /></a>}
           {xUrl && <a href={xUrl} target="_blank" rel="noreferrer" aria-label="KORAT on X"><XLogo size={21} weight="bold" /></a>}

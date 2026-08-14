@@ -5,9 +5,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const quips = [
-  "Ask me about cats. I have nine lives and zero interest in doing your homework.",
-  "All cats are excellent. Korats simply arrive with silver coats, green eyes, and better luck.",
-  "Robinhood Chain is where my paws are. ETH pays the gas. I still refuse to drive.",
+  "Nine lives, zero interest in your homework. Ask me about cats or don't waste the whiskers.",
+  "Every cat is elite. I just came pre-installed with a silver coat, green eyes, and the good luck cat job title.",
+  "Robinhood Chain is where my paws live. ETH pays the gas. I still refuse to drive.",
+  "I do not do price predictions. I do naps, lore, and staring at you until you scroll.",
 ];
 
 export function CatQuips() {

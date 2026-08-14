@@ -11,17 +11,17 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "$KORAT | The lucky cat on Robinhood Chain",
+  title: "$KORAT | The good luck cat on Robinhood Chain",
   description:
-    "Meet $KORAT, the silver-blue good luck cat bringing centuries of Thai lore to Robinhood Chain.",
+    "Meet $KORAT, the silver-blue good luck cat bringing centuries of lore to Robinhood Chain.",
   icons: {
     icon: [{ url: "/images/korat-avatar.png", type: "image/png" }],
     shortcut: "/images/korat-avatar.png",
     apple: "/images/korat-avatar.png",
   },
   openGraph: {
-    title: "$KORAT | The lucky cat on Robinhood Chain",
-    description: "Ancient luck. Sharp eyes. Onchain energy.",
+    title: "$KORAT | The good luck cat on Robinhood Chain",
+    description: "Ancient good luck. Sharp eyes. Onchain energy.",
     images: [{ url: "/images/korat-hero.png", width: 1680, height: 945 }],
   },
 };

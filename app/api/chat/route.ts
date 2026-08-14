@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   try {
     const parsed = requestSchema.safeParse(await request.json());
     if (!parsed.success) {
-      return NextResponse.json({ error: "Please send a shorter, valid message." }, { status: 400 });
+      return NextResponse.json({ error: "That message is too long for my attention span. Trim it down." }, { status: 400 });
     }
 
     const reply = await generateKoratReply(parsed.data.messages);
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
     console.error("KORAT chat error", error);
     return NextResponse.json(
-      { error: "The lore keeper is taking a catnap. Please try again shortly." },
+      { error: "Catnap in progress, brain temporarily offline. Poke me again in a moment." },
       { status: 500 },
     );
   }
