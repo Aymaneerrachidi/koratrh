@@ -19,6 +19,18 @@ function memoryKey(ctx: { chat?: { id: number; type: string }; from?: { id: numb
   return isGroup ? `${chatId}:${ctx.from?.id ?? 0}` : `${chatId}`;
 }
 
+
+/** Last few updates seen, for diagnosing group delivery. No message text stored. */
+type Seen = { at: string; chatType?: string; hasText: boolean; mentioned?: boolean; repliedToBot?: boolean; answered?: boolean };
+const seen: Seen[] = [];
+export function recentUpdates() {
+  return seen.slice(-15);
+}
+function record(entry: Seen) {
+  seen.push(entry);
+  if (seen.length > 15) seen.shift();
+}
+
 export const KORAT_COMMANDS = [
   { command: "start", description: "Meet the good luck cat" },
   { command: "lore", description: "The origin story, short version" },
@@ -29,6 +41,17 @@ export const KORAT_COMMANDS = [
 
 export function createKoratBot(token: string) {
   const bot = new Bot(token);
+
+  // Records every update that reaches the bot, so we can tell "Telegram never
+  // delivered it" apart from "we received it and filtered it out".
+  bot.use(async (ctx, next) => {
+    record({
+      at: new Date().toISOString(),
+      chatType: ctx.chat?.type,
+      hasText: typeof ctx.message?.text === "string",
+    });
+    await next();
+  });
 
   bot.command("start", async (ctx) => {
     histories.delete(memoryKey(ctx));
@@ -74,6 +97,15 @@ export function createKoratBot(token: string) {
       const mentionPattern = new RegExp(`@${username}\\b`, "i");
       const mentioned = mentionPattern.test(raw);
       const repliedToBot = ctx.message.reply_to_message?.from?.id === ctx.me.id;
+
+      record({
+        at: new Date().toISOString(),
+        chatType: ctx.chat.type,
+        hasText: true,
+        mentioned,
+        repliedToBot,
+        answered: mentioned || repliedToBot,
+      });
 
       // In a group, stay silent unless spoken to. No mention, no reply, no answer.
       if (!mentioned && !repliedToBot) return;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { webhookCallback } from "grammy";
-import { createKoratBot } from "@/lib/korat-bot";
+import { createKoratBot, recentUpdates } from "@/lib/korat-bot";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,5 +40,6 @@ export async function GET() {
     // So you can tell which build is actually live instead of guessing.
     commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "local",
     groupMentionGate: true,
+    recentUpdates: recentUpdates(),
   });
 }
