@@ -71,7 +71,7 @@ export default function Home() {
       <section className="fact-ribbon" aria-label="KORAT at a glance" data-reveal>
         <div><span>Coat</span><strong>Silver-blue</strong></div>
         <div><span>Known as</span><strong>Si-Sawat</strong></div>
-        <div><span>Symbol</span><strong>Good fortune</strong></div>
+        <div><span>Symbol</span><strong>Good Luck</strong></div>
         <div><span>Network</span><strong>Robinhood Chain</strong></div>
       </section>
 
