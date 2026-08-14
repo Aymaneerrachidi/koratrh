@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { webhookCallback } from "grammy";
-import { createKoratBot, recentUpdates } from "@/lib/korat-bot";
+import { createKoratBot, updateCounters } from "@/lib/korat-bot";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,27 +32,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * Temporary diagnostic key for the group-delivery investigation.
- * Remove this and the recentUpdates buffer once the issue is resolved.
- */
-const DIAG_KEY = "korat-diag-7f3a91c4";
-
-export async function GET(request: NextRequest) {
-  const status = {
+export async function GET() {
+  return NextResponse.json({
     ok: true,
     configured: Boolean(token),
     secured: Boolean(secret),
     // So you can tell which build is actually live instead of guessing.
     commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "local",
     groupMentionGate: true,
-  };
-
-  // Update metadata is only returned to whoever holds the diagnostic key, so a
-  // public health check cannot be used to watch group activity.
-  if (request.nextUrl.searchParams.get("diag") === DIAG_KEY) {
-    return NextResponse.json({ ...status, recentUpdates: recentUpdates() });
-  }
-
-  return NextResponse.json(status);
+    // Aggregate counters only: enough to tell whether group updates are being
+    // delivered at all, without exposing a timeline of chat activity.
+    // Temporary, remove once group delivery is confirmed working.
+    counters: updateCounters(),
+  });
 }

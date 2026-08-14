@@ -20,15 +20,34 @@ function memoryKey(ctx: { chat?: { id: number; type: string }; from?: { id: numb
 }
 
 
-/** Last few updates seen, for diagnosing group delivery. No message text stored. */
-type Seen = { at: string; chatType?: string; hasText: boolean; mentioned?: boolean; repliedToBot?: boolean; answered?: boolean };
-const seen: Seen[] = [];
-export function recentUpdates() {
-  return seen.slice(-15);
+/**
+ * Aggregate counters for diagnosing group delivery. Deliberately not a timeline:
+ * no timestamps, no chat ids, no message text, so this is safe to expose on the
+ * public health endpoint. Temporary, remove once group delivery is confirmed.
+ */
+const counters = {
+  total: 0,
+  private: 0,
+  group: 0,
+  supergroup: 0,
+  groupMentioned: 0,
+  groupAnswered: 0,
+};
+
+export function updateCounters() {
+  return { ...counters };
 }
-function record(entry: Seen) {
-  seen.push(entry);
-  if (seen.length > 15) seen.shift();
+
+function countUpdate(chatType?: string) {
+  counters.total += 1;
+  if (chatType === "private") counters.private += 1;
+  else if (chatType === "group") counters.group += 1;
+  else if (chatType === "supergroup") counters.supergroup += 1;
+}
+
+function countGroupDecision(mentioned: boolean, answered: boolean) {
+  if (mentioned) counters.groupMentioned += 1;
+  if (answered) counters.groupAnswered += 1;
 }
 
 export const KORAT_COMMANDS = [
@@ -45,11 +64,7 @@ export function createKoratBot(token: string) {
   // Records every update that reaches the bot, so we can tell "Telegram never
   // delivered it" apart from "we received it and filtered it out".
   bot.use(async (ctx, next) => {
-    record({
-      at: new Date().toISOString(),
-      chatType: ctx.chat?.type,
-      hasText: typeof ctx.message?.text === "string",
-    });
+    countUpdate(ctx.chat?.type);
     await next();
   });
 
@@ -98,14 +113,7 @@ export function createKoratBot(token: string) {
       const mentioned = mentionPattern.test(raw);
       const repliedToBot = ctx.message.reply_to_message?.from?.id === ctx.me.id;
 
-      record({
-        at: new Date().toISOString(),
-        chatType: ctx.chat.type,
-        hasText: true,
-        mentioned,
-        repliedToBot,
-        answered: mentioned || repliedToBot,
-      });
+      countGroupDecision(mentioned, mentioned || repliedToBot);
 
       // In a group, stay silent unless spoken to. No mention, no reply, no answer.
       if (!mentioned && !repliedToBot) return;
