@@ -29,12 +29,12 @@ async function main() {
     );
   });
 
-  bot.command("contract", async (ctx) => {
+  bot.command(["contract", "ca"], async (ctx) => {
     const contract = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS?.trim();
     await ctx.reply(
       contract
-        ? `Confirmed $KORAT contract:\n${contract}`
-        : "No contract announced here yet. Anyone sliding one into your DMs is not me, is not good luck, and is after your lunch money.",
+        ? `Confirmed $KORAT CA:\n${contract}\n\nCheck it character by character. Fake CAs are built to match the first and last few, so a quick glance is how wallets die.`
+        : "No CA announced here yet. Anyone sliding one into your DMs is not me, is not good luck, and is after your lunch money.\n\nWhen it is real it comes from official links only. Verify before you ape.",
     );
   });
 
@@ -85,7 +85,7 @@ async function main() {
     { command: "start", description: "Meet the good luck cat" },
     { command: "lore", description: "The origin story, short version" },
     { command: "chain", description: "Robinhood Chain basics" },
-    { command: "contract", description: "Show the confirmed contract" },
+    { command: "ca", description: "Show the confirmed contract address" },
     { command: "reset", description: "Wipe my memory" },
   ]);
 

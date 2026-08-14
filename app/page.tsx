@@ -114,6 +114,27 @@ export default function Home() {
             </article>
           </div>
         </div>
+
+        <aside className="source-card" data-reveal>
+          <div className="source-shot">
+            <Image
+              src="/images/korat-source-cfa.jpg"
+              alt="Cat Fanciers' Association breed page for the Korat, describing it as a good luck cat with a silver blue coat and heart shaped face"
+              width={1105}
+              height={513}
+              sizes="(max-width: 900px) 100vw, 60vw"
+            />
+          </div>
+          <div className="source-note">
+            <p className="mono-label">Primary source</p>
+            <p>
+              Not our words. The Cat Fanciers&apos; Association lists the Korat as a <strong>good luck cat</strong>, silver blue coat, heart shaped face, energetic and affectionate.
+            </p>
+            <a className="text-link" href="https://cfa.org/breed/korat/" target="_blank" rel="noreferrer">
+              cfa.org/breed/korat <ArrowUpRight size={17} weight="bold" />
+            </a>
+          </div>
+        </aside>
       </section>
 
       <section className="ask-section section" id="ask">
@@ -170,15 +191,7 @@ export default function Home() {
           </span>
           $KORAT
         </a>
-        <div className="footer-note">
-          <p>Independent community project. Not affiliated with or endorsed by Robinhood. Memecoins are highly speculative.</p>
-          <p className="footer-source">
-            Primary breed source:{" "}
-            <a href="https://cfa.org/breed/korat/" target="_blank" rel="noreferrer">
-              Cat Fanciers&apos; Association &mdash; Korat <ArrowUpRight size={13} weight="bold" />
-            </a>
-          </p>
-        </div>
+        <p>Independent community project. Not affiliated with or endorsed by Robinhood. Memecoins are highly speculative.</p>
         <div className="social-links">
           {telegramUrl && <a href={telegramUrl} target="_blank" rel="noreferrer" aria-label="KORAT on Telegram"><TelegramLogo size={22} weight="fill" /></a>}
           {xUrl && <a href={xUrl} target="_blank" rel="noreferrer" aria-label="KORAT on X"><XLogo size={21} weight="bold" /></a>}

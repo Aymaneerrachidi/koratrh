@@ -73,7 +73,7 @@ async function generateWithCohere(messages: ChatMessage[]) {
         { role: "system", content: buildKoratInstructions() },
         ...messages.map((message) => ({ role: message.role, content: message.content })),
       ],
-      max_tokens: 500,
+      max_tokens: 700,
       temperature: 0.85,
     },
     {
@@ -81,6 +81,11 @@ async function generateWithCohere(messages: ChatMessage[]) {
       "X-Client-Name": "korat-onchain",
     },
   );
+
+  const finish = response.finish_reason?.toUpperCase();
+  if (finish && finish !== "COMPLETE" && finish !== "STOP_SEQUENCE") {
+    throw new Error(`Incomplete response (finish_reason: ${finish})`);
+  }
 
   return response.message?.content?.find((part) => part.type === "text")?.text ?? "";
 }
@@ -94,11 +99,16 @@ async function generateWithGroq(messages: ChatMessage[]) {
         { role: "system", content: buildKoratInstructions() },
         ...messages.map((message) => ({ role: message.role, content: message.content })),
       ],
-      max_completion_tokens: 500,
+      max_completion_tokens: 700,
       temperature: 0.85,
     },
     { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
   );
+
+  const finish = response.choices?.[0]?.finish_reason;
+  if (finish && finish !== "stop") {
+    throw new Error(`Incomplete response (finish_reason: ${finish})`);
+  }
 
   return response.choices?.[0]?.message?.content ?? "";
 }
@@ -120,9 +130,10 @@ async function postJson<T>(url: string, body: unknown, headers: Record<string, s
 }
 
 type CohereResponse = {
+  finish_reason?: string;
   message?: { content?: Array<{ type: string; text?: string }> };
 };
 
 type GroqResponse = {
-  choices?: Array<{ message?: { content?: string } }>;
+  choices?: Array<{ finish_reason?: string; message?: { content?: string } }>;
 };
