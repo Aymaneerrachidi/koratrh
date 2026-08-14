@@ -2,6 +2,7 @@
 
 import { Check, Copy, Plus, ShoppingBagOpen } from "@phosphor-icons/react";
 import { useState } from "react";
+import { getKoratContractAddress } from "@/lib/korat-config";
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-const contract = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS?.trim();
+const contract = getKoratContractAddress();
 const swapUrl = process.env.NEXT_PUBLIC_SWAP_URL?.trim();
 
 export function NetworkPanel() {

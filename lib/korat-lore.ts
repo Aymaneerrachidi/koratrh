@@ -1,3 +1,5 @@
+import { getKoratContractAddress } from "./korat-config";
+
 export const KORAT_FACTS = {
   identity: [
     "KORAT is an independent community memecoin project inspired by the Korat cat and built for Robinhood Chain.",
@@ -113,7 +115,7 @@ export const ROBINHOOD_MEMES = {
   ],
 } as const;
 export function buildKoratInstructions(options: { compact?: boolean } = {}) {
-  const contract = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS?.trim();
+  const contract = getKoratContractAddress();
   const telegram = process.env.NEXT_PUBLIC_TELEGRAM_URL?.trim();
   const xUrl = process.env.NEXT_PUBLIC_X_URL?.trim();
   const compact = options.compact === true;
