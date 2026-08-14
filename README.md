@@ -42,6 +42,50 @@ A launch-ready memecoin website and Telegram lore bot for an independent Korat p
 
 Create the Telegram token with [BotFather](https://t.me/BotFather). Set the generated avatar at `public/images/korat-avatar.png` as the bot profile photo.
 
+## Keeping the Telegram bot online
+
+The bot runs two ways from one shared definition in `lib/korat-bot.ts`:
+
+- **Local development**: `npm run bot` uses long polling. It only runs while your
+  machine is awake and the terminal is open.
+- **Production**: Telegram pushes updates to `/api/telegram`, which is deployed
+  with the website. Nothing has to stay awake.
+
+Never run both against the same token at once. Telegram allows only one.
+
+### One-time webhook setup
+
+1. Deploy the site, then set these in the Vercel project settings:
+
+   - `TELEGRAM_BOT_TOKEN`
+   - `TELEGRAM_WEBHOOK_SECRET` (any random string you invent)
+   - the LLM keys, and the `NEXT_PUBLIC_*` launch values
+
+2. Point Telegram at the deployment:
+
+   ```bash
+   curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://<your-domain>/api/telegram&secret_token=<YOUR_SECRET>"
+   ```
+
+3. Register the command menu once:
+
+   ```bash
+   curl -X POST "https://api.telegram.org/bot<TOKEN>/setMyCommands"      -H "content-type: application/json"      -d '{"commands":[{"command":"start","description":"Meet the good luck cat"},{"command":"lore","description":"The origin story, short version"},{"command":"chain","description":"Robinhood Chain basics"},{"command":"ca","description":"Show the confirmed contract address"},{"command":"reset","description":"Wipe my memory"}]}'
+   ```
+
+4. Check it: `GET /api/telegram` returns `{"ok":true,"configured":true,"secured":true}`,
+   and `getWebhookInfo` should show your URL with no `last_error_message`.
+
+To go back to local polling, run `npm run bot`. It deletes the webhook on start.
+
+### Notes
+
+- The secret header is verified on every request, so nobody else can post updates.
+- Conversation memory is in-process. On serverless it survives only while an
+  instance stays warm, so treat multi-turn memory as best effort. `/reset` always works.
+- `.env.local` overrides `.env` in Next.js. An empty value there wins over a real
+  one in `.env`, which silently disables the bot.
+
 ## LLM fallback order
 
 The shared router at `lib/llm.ts` tries each configured provider in this order:
