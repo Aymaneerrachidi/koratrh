@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Cat, TelegramLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
+import { ArrowDown, ArrowUpRight, TelegramLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import { AnimatedPage } from "@/components/AnimatedPage";
 import { CatQuips } from "@/components/CatQuips";
@@ -24,7 +24,9 @@ export default function Home() {
         />
         <header className="site-header">
           <a className="brand" href="#top" aria-label="KORAT home">
-            <Cat size={26} weight="fill" />
+            <span className="brand-mark" aria-hidden="true">
+              <Image src="/images/korat-avatar.png" alt="" fill sizes="40px" />
+            </span>
             <span>$KORAT</span>
           </a>
           <nav aria-label="Primary navigation">
@@ -32,7 +34,27 @@ export default function Home() {
             <a href="#ask">Ask KORAT</a>
             <a href="#chain">Chain</a>
           </nav>
-          <ThemeToggle />
+          <div className="header-actions">
+            {telegramUrl ? (
+              <a className="header-social" href={telegramUrl} target="_blank" rel="noreferrer" aria-label="KORAT on Telegram">
+                <TelegramLogo size={20} weight="fill" />
+              </a>
+            ) : (
+              <span className="header-social is-pending" aria-label="Telegram link coming soon" title="Telegram link coming soon">
+                <TelegramLogo size={20} weight="fill" />
+              </span>
+            )}
+            {xUrl ? (
+              <a className="header-social" href={xUrl} target="_blank" rel="noreferrer" aria-label="KORAT on X">
+                <XLogo size={19} weight="bold" />
+              </a>
+            ) : (
+              <span className="header-social is-pending" aria-label="X link coming soon" title="X link coming soon">
+                <XLogo size={19} weight="bold" />
+              </span>
+            )}
+            <ThemeToggle />
+          </div>
         </header>
 
         <div className="hero-content" data-hero-copy>
@@ -142,7 +164,12 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <a className="brand footer-brand" href="#top"><Cat size={25} weight="fill" /> $KORAT</a>
+        <a className="brand footer-brand" href="#top">
+          <span className="brand-mark" aria-hidden="true">
+            <Image src="/images/korat-avatar.png" alt="" fill sizes="40px" />
+          </span>
+          $KORAT
+        </a>
         <p>Independent community project. Not affiliated with or endorsed by Robinhood. Memecoins are highly speculative.</p>
         <div className="social-links">
           {telegramUrl && <a href={telegramUrl} target="_blank" rel="noreferrer" aria-label="KORAT on Telegram"><TelegramLogo size={22} weight="fill" /></a>}

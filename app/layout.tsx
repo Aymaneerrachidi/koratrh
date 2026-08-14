@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   title: "$KORAT | The lucky cat on Robinhood Chain",
   description:
     "Meet $KORAT, the silver-blue good luck cat bringing centuries of Thai lore to Robinhood Chain.",
+  icons: {
+    icon: [{ url: "/images/korat-avatar.png", type: "image/png" }],
+    shortcut: "/images/korat-avatar.png",
+    apple: "/images/korat-avatar.png",
+  },
   openGraph: {
     title: "$KORAT | The lucky cat on Robinhood Chain",
     description: "Ancient luck. Sharp eyes. Onchain energy.",

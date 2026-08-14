@@ -76,10 +76,36 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   color: #171a16;
 }
-.brand { display: inline-flex; align-items: center; gap: 9px; width: max-content; font-weight: 800; letter-spacing: -.04em; }
+.brand { display: inline-flex; align-items: center; gap: 10px; width: max-content; font-weight: 800; letter-spacing: -.04em; }
+.brand-mark {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  overflow: hidden;
+  border: 1px solid rgb(23 26 22 / 30%);
+  border-radius: 12px;
+  background: var(--green);
+}
+.brand-mark img { object-fit: cover; }
 .site-header nav { display: flex; align-items: center; gap: 32px; font-size: 14px; font-weight: 650; }
 .site-header nav a { transition: opacity .2s ease; }
 .site-header nav a:hover { opacity: .58; }
+.header-actions { justify-self: end; display: flex; align-items: center; gap: 8px; }
+.header-social {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(23 26 22 / 35%);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 22%);
+  color: #171a16;
+  transition: transform .2s ease, background .2s ease, opacity .2s ease;
+}
+.header-social[href]:hover { background: rgb(255 255 255 / 55%); transform: translateY(-1px); }
+.header-social[href]:active { transform: translateY(1px); }
+.header-social.is-pending { opacity: .48; cursor: default; }
 .icon-button {
   justify-self: end;
   width: 42px;
@@ -341,7 +367,10 @@ a { color: inherit; text-decoration: none; }
   .section { width: min(100% - 28px, 1240px); }
   .site-header { width: min(100% - 28px, 1320px); grid-template-columns: 1fr auto; }
   .site-header nav { display: none; }
-  .site-header .icon-button { grid-column: 2; }
+  .brand-mark { width: 34px; height: 34px; flex-basis: 34px; border-radius: 10px; }
+  .header-actions { gap: 6px; }
+  .header-social { width: 36px; height: 36px; border-radius: 10px; }
+  .icon-button { width: 36px; height: 36px; border-radius: 10px; }
   .hero { min-height: 760px; }
   .hero-image { object-position: 66% center; }
   .hero-content { width: min(100% - 28px, 1320px); min-height: 688px; padding-bottom: 56px; }
