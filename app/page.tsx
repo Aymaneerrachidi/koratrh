@@ -6,8 +6,8 @@ import { KoratChat } from "@/components/KoratChat";
 import { NetworkPanel } from "@/components/NetworkPanel";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL?.trim();
-const xUrl = process.env.NEXT_PUBLIC_X_URL?.trim();
+const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL?.trim() || "https://t.me/koratrh";
+const xUrl = process.env.NEXT_PUBLIC_X_URL?.trim() || "https://x.com/Koratrobinhood";
 
 export default function Home() {
   return (
